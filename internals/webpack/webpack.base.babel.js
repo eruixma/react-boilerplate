@@ -4,6 +4,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const tailwindcss = require('tailwindcss');
 
 module.exports = options => ({
   mode: options.mode,
@@ -33,7 +34,17 @@ module.exports = options => ({
         // for a list of loaders, see https://webpack.js.org/loaders/#styling
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: [tailwindcss],
+            },
+          },
+        ],
       },
       {
         // Preprocess 3rd party .css files located in node_modules
